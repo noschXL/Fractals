@@ -1,5 +1,4 @@
 from typing import Any
-import pygame
 import math
 
 class Point:
