@@ -13,7 +13,7 @@ class Point:
         self.angle -= angle
 
     def forward(self, distance):
-        self.pos = (self.pos[0] + distance * math.cos(self.angle), self.pos[1] + distance * math.sin(self.angle))
+        self.pos = (self.pos[0] + distance * math.cos(math.radians(self.angle)), self.pos[1] + distance * math.sin(math.radians(self.angle)))
         return self.pos
     
     def get_pos(self):

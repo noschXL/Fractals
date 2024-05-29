@@ -1,24 +1,23 @@
 import Point_Walker
 from settings import *
 
-walker = Point_Walker.Point()
+def start(n: int):
+    walker = Point_Walker.Point((0, height / 2))
+    points = [walker.get_pos()]
+    l = width / 3 ** n
+    fractal(n, l, points, walker)
+    return points
 
-n = int(input("Enter n: "))
-
-l = width / (3 ** n) * 3
-
-
-
-points = []
-def fractal(n):
+    
+    
+def fractal(n: int, l: float, points, walker):
     if n == 0:
         points.append(walker.forward(l))
     else:
-        fractal(n-1)
-        walker.left(60)
-        fractal(n-1)
-        walker.right(120)
-        fractal(n-1)
-        walker.left(60)
-        fractal(n-1)
-    
+        fractal(n-1, l, points, walker)
+        walker.right(60)
+        fractal(n-1, l, points, walker)
+        walker.left(120)
+        fractal(n-1, l, points, walker)
+        walker.right(60)
+        fractal(n-1, l, points, walker)
