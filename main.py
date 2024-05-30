@@ -1,7 +1,9 @@
 import pygame
-import koch_fractal
 import Point_Walker
 from settings import *
+
+import koch_fractal
+import dragon_fractal
 
 pygame.init()
 
@@ -25,14 +27,47 @@ color_active = pygame.Color('dodgerblue2')
 color = color_inactive
 active = False
 text = ''
+dimensions = (2,2)
+choices = ["koch_fractal", "dragon_curve", "sierpinski_triangle", "Empty"]
 
 #pygame.draw.lines(screen, "#FFFFFF", False, koch_fractal.points, 1)
 
 inputmenu = True
+def draw_choices(n: int):
+    screen.fill((30, 30, 30))
+    for i in range(dimensions[0]):
+        for j in range(dimensions[1]):
+            rect = pygame.Rect(i * (width / dimensions[0]), (j * (width / dimensions[1])), height / dimensions[1], height / dimensions[1])
+            pygame.draw.rect(screen, "#A0A0A0", rect, 1)
+            surf = font.render(choices[i * dimensions[0] + j], True, "#F0F0F0")
+            screen.blit(surf, (rect.centerx - surf.get_rect().width / 2, rect.centery - surf.get_rect().height / 2))
+    
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE]:
+            return
+        
+        if pygame.mouse.get_pressed()[0]:
+            mouse = pygame.mouse.get_pos()
+            x = mouse[0] //  (width / dimensions[0])
+            y = mouse[1] // (height / dimensions[1])
+            draw_fractal(n, x * y + y)
+            return
+
+
+        pygame.display.update()
+
 def draw_fractal(n: int, id = 0):
     
     if id == 0:
         points = koch_fractal.start(n)
+    elif id == 1:
+        points = dragon_fractal.start(n)
 
     screen.fill((30, 30, 30))
     pygame.draw.lines(screen, "#FFFFFF", False, points, 1)
@@ -66,7 +101,6 @@ while True:
             if active:
                 if event.key == pygame.K_RETURN:
                     n = int(text)
-                    print(text)
                     text = ''
                     inputmenu = False
                 elif event.key == pygame.K_BACKSPACE:
@@ -79,15 +113,15 @@ while True:
         # Render the current text.
         txt_surface = font.render(text, True, color)
         # Resize the box if the text is too long.
-        width = max(200, txt_surface.get_width()+10)
-        input_box.w = width
+        maxwidth = max(200, txt_surface.get_width()+10)
+        input_box.w = maxwidth
         # Blit the text.
         screen.blit(txt_surface, (input_box.x+5, input_box.y+5))
         screen.blit(inputtext, inputtext_rect)
         # Blit the input_box rect.
         pygame.draw.rect(screen, color, input_box, 2)
     else:
-        draw_fractal(n)
+        draw_choices(n)
         inputmenu = True
         color = color_inactive
         active = False
