@@ -70,7 +70,7 @@ def draw_fractal(n: int, id = 0):
         points = dragon_fractal.start(n)
 
     screen.fill((30, 30, 30))
-    pygame.draw.lines(screen, "#FFFFFF", False, points, 1)
+    pygame.draw.lines(screen, "#00FFFF", False, points, 1)
 
     while True:
         for event in pygame.event.get():

@@ -1,8 +1,9 @@
 import Point_Walker
+import math
 from settings import *
 
 def start(n: int):
-    l = (height / (2 ** (max(n, 1) - 1))) / 2
+    l = (height / (2 ** min(n, 11))) * math.sqrt(min(n, 11)) / 2 
 
     points = []
     walker = Point_Walker.Point((width / 2,height / 2), -90)
@@ -11,13 +12,11 @@ def start(n: int):
     string = ''
     if n > 0:
         string = 'R'
-        for _ in range(n):
-            new_string = string
-            new_string = list(new_string)
-            new_string.append("R")
-            new_string[len(new_string) - 1] = 'L'
-            new_string = ''.join(new_string)
-            string += new_string
+        for _ in range(n - 1):
+            newstr = list(string)
+            newstr[math.floor(len(newstr) / 2)] = 'L'
+            string += 'R'
+            string += ''.join(newstr)
     return draw(string, l, points, walker)
 
 def draw(instructions: str, lenght: float, points: list, walker: Point_Walker.Point):
@@ -26,6 +25,8 @@ def draw(instructions: str, lenght: float, points: list, walker: Point_Walker.Po
             walker.right(-90)
         elif i == 'L':
             walker.left(-90)
+        else:
+            continue
         walker.set_angle(round(walker.get_angle()))
         points.append(walker.forward(lenght))
     return points
