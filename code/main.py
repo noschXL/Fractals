@@ -1,9 +1,9 @@
 import pygame
-import Point_Walker
 from settings import *
 
 import koch_fractal
 import dragon_fractal
+import sierpinski_fractal
 
 pygame.init()
 
@@ -30,8 +30,6 @@ text = ''
 dimensions = (2,2)
 choices = ["koch_fractal", "dragon_curve", "sierpinski_triangle", "Empty"]
 
-#pygame.draw.lines(screen, "#FFFFFF", False, koch_fractal.points, 1)
-
 inputmenu = True
 def draw_choices(n: int):
     screen.fill((30, 30, 30))
@@ -56,7 +54,7 @@ def draw_choices(n: int):
             mouse = pygame.mouse.get_pos()
             x = mouse[0] //  (width / dimensions[0])
             y = mouse[1] // (height / dimensions[1])
-            draw_fractal(n, x * y + y)
+            draw_fractal(n, x * dimensions[0] + y)
             return
 
 
@@ -68,6 +66,8 @@ def draw_fractal(n: int, id = 0):
         points = koch_fractal.start(n)
     elif id == 1:
         points = dragon_fractal.start(n)
+    elif id == 2:
+        points = sierpinski_fractal.start(n)
 
     screen.fill((30, 30, 30))
     pygame.draw.lines(screen, "#00FFFF", False, points, 1)
