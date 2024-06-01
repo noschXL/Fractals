@@ -3,7 +3,7 @@ import math
 from settings import *
 
 def start(n: int):
-    l = (height / (2 ** min(n, 11))) * math.sqrt(min(n, 11)) / 2 
+    l = (height / (2 ** min(n, 11))) * max(math.sqrt(min(n, 11)), 1) / 2 
 
     points = []
     walker = Point_Walker.Point((width / 2,height / 2), -90)

@@ -12,19 +12,7 @@ def fractal(n: int, l: float, points: list, walker: Point_Walker.Point):
         points.append(walker.forward(l))
         walker.left(120)
     else:
-        #*draw the 1st triangle
-        fractal(n - 1, l / 2, points, walker)
-        walker.forward(l / 2)
-
-        #*draw the 2nd triangle
-        fractal(n - 1, l / 2, points, walker)
-        walker.forward(l)
-        walker.left(120)
-        walker.forward(l / 2)
-        print(walker.pos)
-
-        #*draw the 3th triangle
-        fractal(n - 1, l / 2, points, walker)
+        fractal(n, l, points, walker)
 
 def start(n: int):
     l = width
