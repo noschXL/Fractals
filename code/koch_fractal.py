@@ -1,8 +1,8 @@
-import Point_Walker
+import PointWalker as PointWalker
 from settings import *
 
 def start(n: int):
-    walker = Point_Walker.Point((0, height / 2))
+    walker = PointWalker.Point((0, height / 2))
     points = [walker.get_pos()]
     l = width / 3 ** n
     fractal(n, l, points, walker)
