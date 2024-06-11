@@ -8,7 +8,6 @@ beta = 90 - alpha
 def start(n: int):
     string = makestr(n)
     ret =  followstr(string, n)
-    print(string)
     return ret
     
     
