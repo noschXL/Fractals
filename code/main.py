@@ -1,9 +1,15 @@
-import pygame
-from settings import *
+import pygame  # type:ignore
+import settings  # type:ignore
 
-import koch_fractal
-import dragon_fractal
-import sierpinski_fractal
+width = settings.width
+height = settings.height
+
+import koch_fractal as koch_fractal
+import dragon_fractal as dragon_fractal
+import sierpinski_fractal as sierpinski_fractal
+import tree_fractal as tree_fractal
+
+width, height = 600,600
 
 pygame.init()
 
@@ -27,8 +33,8 @@ color_active = pygame.Color('dodgerblue2')
 color = color_inactive
 active = False
 text = ''
-dimensions = (2,2)
-choices = ["koch_fractal", "dragon_curve", "sierpinski_triangle", "Empty"]
+dimensions = (3,2)
+choices = ["Koch Snowflake", "Dragon Curve", "Sierpinski Triangle", "Pythagorean Tree", "Hilbert Curve", "Empty", "Empty"]
 
 inputmenu = True
 def draw_choices(n: int):
@@ -68,6 +74,8 @@ def draw_fractal(n: int, id = 0):
         points = dragon_fractal.start(n)
     elif id == 2:
         points = sierpinski_fractal.start(n)
+    elif id == 3:
+        points = tree_fractal.start(n)
 
     screen.fill((30, 30, 30))
     pygame.draw.lines(screen, "#00FFFF", False, points, 1)
