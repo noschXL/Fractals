@@ -2,33 +2,41 @@ import PointWalker
 from settings import *
 
 def start(n):
-    l = width / 2 / 3 ** n
-    walker = PointWalker.Point((width / 4, 599), -90)
+    string = makestr(n)
+    return followstr(string, n)
     
     
-def fractal(n: int, l: float, right: bool, walker: PointWalker.Point):
-    if n == 0:
-        if right:
+def makestr(n):
+    start = "LF+RFR+FL-"
+    
+    rules = {"R": "-LF+RFR+FL-",
+             "L": "+RF-LFL-FR+"}
+    
+    newstr = start
+    for _ in range(n):
+        newstr = ""
+        for char in start:
+            try:
+                newstr += rules[char]
+            except KeyError:
+                newstr += char
+
+        start = newstr
+
+    return start
+
+
+def followstr(string, n):
+    div = 3 ** n
+    l = width / div - 1
+    walker = PointWalker.Point((0, height - 1), -90)
+    for char in string:
+        if char == "F":
             walker.forward(l)
-            walker.right()
-            walker.forward(l)
-            walker.right()
-            walker.forward(l)
-        else:
-            walker.right()
-            walker.forward(l)
+        elif char == "+":
             walker.left()
-            walker.forward(l)
-            walker.left()
-            walker.forward(l)
-    else:
-        fractal(n-1, l, not right, walker)
-        walker.right()
-        walker.forward(l)
-        fractal(n-1, l, not right, walker)
-        walker.forward(l)
-        fractal(n-1, l, not right, walker)
-        walker.right()
-        walker.forward(l)
-        fractal(n-1, l, not right, walker)
+        elif char == "-":
+            walker.right()
+    
+    return walker.points
         

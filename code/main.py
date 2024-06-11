@@ -4,10 +4,11 @@ import settings  # type:ignore
 width = settings.width
 height = settings.height
 
-import koch_fractal as koch_fractal
-import dragon_fractal as dragon_fractal
-import sierpinski_fractal as sierpinski_fractal
-import tree_fractal as tree_fractal
+import koch_fractal
+import dragon_fractal
+import sierpinski_fractal
+import tree_fractal
+import hilbert_fractal
 
 width, height = 600,600
 
@@ -34,16 +35,22 @@ color = color_inactive
 active = False
 text = ''
 dimensions = (3,2)
-choices = ["Koch Snowflake", "Dragon Curve", "Sierpinski Triangle", "Pythagorean Tree", "Hilbert Curve", "Empty", "Empty"]
+choices = ["Koch Snowflake", "Dragon Curve", "Pythagorean Tree", "Sierpinski Triangle", "Hilbert Curve", "Empty"]
 
 inputmenu = True
 def draw_choices(n: int):
     screen.fill((30, 30, 30))
     for i in range(dimensions[0]):
         for j in range(dimensions[1]):
-            rect = pygame.Rect(i * (width / dimensions[0]), (j * (width / dimensions[1])), height / dimensions[1], height / dimensions[1])
+            rect = pygame.Rect(
+                            i * (width / dimensions[0]),
+                           (j * (width / dimensions[1])),
+                           width / dimensions[0],
+                           height / dimensions[1]
+                               )
             pygame.draw.rect(screen, "#A0A0A0", rect, 1)
-            surf = font.render(choices[i * dimensions[0] + j], True, "#F0F0F0")
+            index = j * (dimensions[0]) + i
+            surf = font.render(choices[index], True, "#F0F0F0")
             screen.blit(surf, (rect.centerx - surf.get_rect().width / 2, rect.centery - surf.get_rect().height / 2))
     
     while True:
@@ -60,22 +67,27 @@ def draw_choices(n: int):
             mouse = pygame.mouse.get_pos()
             x = mouse[0] //  (width / dimensions[0])
             y = mouse[1] // (height / dimensions[1])
-            draw_fractal(n, x * dimensions[0] + y)
+            draw_fractal(n, y * dimensions[0] + x)
             return
 
 
         pygame.display.update()
 
 def draw_fractal(n: int, id = 0):
-    
+    print(id)
     if id == 0:
         points = koch_fractal.start(n)
     elif id == 1:
         points = dragon_fractal.start(n)
     elif id == 2:
-        points = sierpinski_fractal.start(n)
-    elif id == 3:
         points = tree_fractal.start(n)
+    elif id == 3:
+        points = sierpinski_fractal.start(n)
+    elif id == 4:
+        points = hilbert_fractal.start(n)
+    else:
+        print(id)
+        return
 
     screen.fill((30, 30, 30))
     pygame.draw.lines(screen, "#00FFFF", False, points, 1)
@@ -131,7 +143,7 @@ while True:
     else:
         draw_choices(n)
         inputmenu = True
-        color = color_inactive
-        active = False
+        color = color_active
+        active = True
     pygame.display.update()
 

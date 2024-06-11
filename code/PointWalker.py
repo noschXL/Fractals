@@ -1,7 +1,7 @@
 import math
 
 class Point:
-    def __init__(self, pos: tuple = (0,0), angle: float = 0, points: list = []) -> None:
+    def __init__(self, pos: tuple = (0,0), angle: float = 0) -> None:
         if not isinstance(pos, tuple):
             raise TypeError("pos must be a tuple")
         
@@ -10,12 +10,12 @@ class Point:
         
         self.pos = pos
         self.angle = angle
-        self.points: list = points
+        self.points: list = [self.get_pos()]
 
-    def left(self, angle: float or int = 90):
+    def left(self, angle: float = 90):
         self.angle += angle
 
-    def right(self, angle: float or int = 90):
+    def right(self, angle: float = 90):
         self.angle -= angle
 
     def forward(self, distance):
