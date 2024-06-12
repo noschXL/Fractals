@@ -13,7 +13,10 @@ def start(n: int):
     
     
 def makestr(n):
-    start = "FFLOBRROBL"
+    if n == 0:
+        start = "F"
+    else:
+        start = "FFLOBRROBL"
     rules = {
             "O": "FFLOBRROBL",
             "F": "FF",
@@ -21,7 +24,7 @@ def makestr(n):
             }
     
     newstr = start
-    for _ in range(n):
+    for _ in range(n - 1):
         newstr = ""
         for char in start:
             try:
@@ -35,7 +38,7 @@ def makestr(n):
 
 def followstr(string, n) -> list[tuple]:
     walker = PointWalker.Point((width / 2, 599), -90)
-    l = height / (2 ** (n + 2))
+    l = height / (2 ** (n + 2)) * 2
     points = [walker.get_pos()]
     for char in string:
         if char == "F" or char == "O":

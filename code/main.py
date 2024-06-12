@@ -9,23 +9,24 @@ import dragon_fractal
 import sierpinski_fractal
 import tree_fractal
 import hilbert_fractal
+import Levy_fractal
+import our_fractal
 
 width, height = 600,600
 
 pygame.init()
 
 screen = pygame.display.set_mode((width, height))
-
+pygame.display.set_caption("Fraktale")
 #n = int(input("Enter n: "))
 
 #koch_fractal.start(n)
 
 font = pygame.font.SysFont("arial", 20)
 
-
 input_box = pygame.Rect(width / 2, height / 2, 140, 32)
 input_box.center = (width / 2, height / 2)
-inputtext = font.render("enter the number of steps (n): ", True, pygame.Color('dodgerblue2'))
+inputtext = font.render("Iterationen (n): ", True, pygame.Color('dodgerblue2'))
 inputtext_rect = inputtext.get_rect()
 inputtext_rect.centery = input_box.centery
 inputtext_rect.x = input_box.x - inputtext_rect.width
@@ -35,7 +36,7 @@ color = color_inactive
 active = False
 text = ''
 dimensions = (3,2)
-choices = ["Koch Snowflake", "Dragon Curve", "Pythagorean Tree", "Sierpinski Triangle", "Hilbert Curve", "Empty"]
+choices = ["Koch Schneeflocke", "Drachenkurve", "Pythagoras Baum", "Sierpinski Dreieck", "Hilbert Kurve", "Levy Kurve"]
 
 inputmenu = True
 def draw_choices(n: int):
@@ -74,7 +75,6 @@ def draw_choices(n: int):
         pygame.display.update()
 
 def draw_fractal(n: int, id = 0):
-    print(id)
     if id == 0:
         points = koch_fractal.start(n)
     elif id == 1:
@@ -85,6 +85,8 @@ def draw_fractal(n: int, id = 0):
         points = sierpinski_fractal.start(n)
     elif id == 4:
         points = hilbert_fractal.start(n)
+    elif id == 5:
+        points = Levy_fractal.start(n)
     else:
         print(id)
         return

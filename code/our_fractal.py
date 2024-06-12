@@ -1,17 +1,11 @@
-import PointWalker #type:ignore
-from settings import * #type:ignore
+import PointWalker
+import math
+from settings import *
 
-def start(n):
-    string = makestr(n)
-    return followstr(string, n)
-    
-    
 def makestr(n):
-    start = "LF+RFR+FL-"
+    start = "F--F--F"
     
-    rules = {
-        "R": "-LF+RFR+FL-",
-        "L": "+RF-LFL-FR+"}
+    rules = {"F": "-F--F--F--F-"}
     
     newstr = start
     for _ in range(n):
@@ -32,16 +26,23 @@ def followstr(string, n):
     for _ in range(n):
         div *= 2
         div += 1
-    l = width / div - 1
-    l += round(n / 4)
-    walker = PointWalker.Point((0, height - 1), -90)
+    l = width / (3**n)
+    walker = PointWalker.Point((0, height - 1), 90)
+    walker.right()
     for char in string:
         if char == "F":
             walker.forward(l)
         elif char == "+":
-            walker.left()
+            walker.left(60)
         elif char == "-":
-            walker.right()
-    
+            walker.right(60)
+        walker.angle = round(walker.angle)
+            
     return walker.points
-        
+            
+
+def start(n):
+    string = makestr(n)
+    print(string)
+    return followstr(string, n)
+    
